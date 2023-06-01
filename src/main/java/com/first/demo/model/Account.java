@@ -1,4 +1,4 @@
-package com.first.demo;
+package com.first.demo.model;
 
 import java.util.List;
 import java.util.Set;
@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 @ComponentScan("com.bank.controller")
 @ComponentScan("com.bank.repo")
 @Entity
-@Table(name="account")
+@Table(name="bank_account")
 public class Account {
 	
 	@Id

@@ -11,27 +11,30 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import antlr.collections.impl.Vector;
-
+import com.first.demo.model.Account;
 
 @Repository
-public interface AccountRepo extends JpaRepository<Account,Integer>{
+public interface AccountRepo extends JpaRepository<Account, Integer> {
 
-	@Query(value="select account_no ,account_holder from account",nativeQuery=true)
+	@Query(value = "select account_no ,account_holder from bank_account", nativeQuery = true)
+	
 	List<ArrayList> getAccounts();
-	
-	@Query("select accountHolder from Account  where accountNo = ?1")
+
+	@Query(value = "select account_holder from bank_account  where account_no = :accountId",nativeQuery=true)
 	String getAccountHolder(@Param("accountId") int accountId);
-	
-	@Query("select accountBalance from Account  where accountNo = ?1")
-	float getAccountBalance(@Param("accountId") int accountId);
-	
-	@Query(value="select * from account where customer_id = ?1",nativeQuery=true)
+
+//	@Query(value = "select account_balance from bank_account  where accountNo = :accountId",nativeQuery=true)
+	List<Account> findByAccountNo(int acc);
+//	float getAccountBalance(@Param("accountId") int accountId);
+
+	@Query(value = "select * from bank_account where customer_id = :customerId", nativeQuery = true)
 	List<Account> findAllByCustomerId(@Param("customerId") int customerId);
+
+//	List<Account> findByCustomerIdAndAccountNo(int cc,int ac);
 	
 	@Transactional
 	@Modifying
-	@Query("update Account set accountBalance = ?1 where accountNo = ?2")
+	@Query(value = "update bank_account set account_balance = :balance where account_no = :accountId",nativeQuery=true)
 	void setAccountBalance(@Param("balance")float balance, @Param("accountId")int accountId);
-	
+
 }
